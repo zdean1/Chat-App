@@ -1,9 +1,12 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import {
+  Component, Inject, OnInit } from '@angular/core';
 import * as _ from 'lodash';
-import { MessagesService } from '../message/messages.service';
-import { ThreadsService } from '../thread/threads.service';
-import { Thread } from '../thread/thread.model';
-import { Message } from '../message/message.model';
+
+import { ThreadsService } from './../thread/threads.service';
+import { MessagesService } from './../message/messages.service';
+
+import { Thread } from './../thread/thread.model';
+import { Message } from './../message/message.model';
 
 @Component({
   selector: 'chat-nav-bar',
@@ -14,28 +17,30 @@ export class ChatNavBarComponent implements OnInit {
   unreadMessagesCount: number;
 
   constructor(public messagesService: MessagesService,
-              public threadsService: ThreadsService) { }
+              public threadsService: ThreadsService) {
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.messagesService.messages
       .combineLatest(
         this.threadsService.currentThread,
-          (messages: Message[], currentThread: Thread) => 
-            [currentThread, messages] )
+        (messages: Message[], currentThread: Thread) =>
+          [currentThread, messages] )
 
       .subscribe(([currentThread, messages]: [Thread, Message[]]) => {
-        this.unreadMessagesCount = 
+        this.unreadMessagesCount =
           _.reduce(
-            messages, 
+            messages,
             (sum: number, m: Message) => {
-              const messageIsInCurrentThread: boolean = m.thread && currentThread && 
-                currentThread && 
+              const messageIsInCurrentThread: boolean = m.thread &&
+                currentThread &&
                 (currentThread.id === m.thread.id);
               if (m && !m.isRead && !messageIsInCurrentThread) {
                 sum = sum + 1;
               }
               return sum;
-            }, 0);
+            },
+            0);
       });
   }
 }
