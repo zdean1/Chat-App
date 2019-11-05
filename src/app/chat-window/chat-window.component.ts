@@ -18,6 +18,7 @@ export class ChatWindowComponent implements OnInit {
   currentThread: Thread;
   draftMessage: Message;
   currentUser: User;
+  windowOpen: boolean = false;
 
   constructor(public messagesService: MessagesService,
               public threadsService: ThreadsService,
@@ -68,5 +69,12 @@ export class ChatWindowComponent implements OnInit {
     const scrollPane: any = this.el
       .nativeElement.querySelector('.msg-container-base');
     scrollPane.scrollTop = scrollPane.scrollHeight;
+  } catch{(console.error('window closed');
+  )}
+
+  minimize(): void {
+    if (this.windowOpen == true) {
+      this.windowOpen = false;
+    } else { this.windowOpen = true; }
   }
 }
