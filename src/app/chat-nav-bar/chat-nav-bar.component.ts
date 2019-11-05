@@ -1,12 +1,13 @@
-import {
-  Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import * as _ from 'lodash';
+import { Router } from '@angular/router';
 
 import { ThreadsService } from './../thread/threads.service';
 import { MessagesService } from './../message/messages.service';
 
 import { Thread } from './../thread/thread.model';
 import { Message } from './../message/message.model';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'chat-nav-bar',
@@ -17,7 +18,9 @@ export class ChatNavBarComponent implements OnInit {
   unreadMessagesCount: number;
 
   constructor(public messagesService: MessagesService,
-              public threadsService: ThreadsService) {
+              public threadsService: ThreadsService,
+              public authService: AuthService,
+              public router: Router) {
   }
 
   ngOnInit(): void {
@@ -42,5 +45,14 @@ export class ChatNavBarComponent implements OnInit {
             },
             0);
       });
+  }
+  logout() {
+    this.authService.logout();
+    if (!this.authService.isLoggedIn) {
+        let redirect = this.authService.redirectUrl ? this.router.parseUrl(this.authService.redirectUrl) : '/login';
+        this.router.navigateByUrl(redirect);
+        console.log('logout');
+    }
+
   }
 }
