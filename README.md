@@ -1,5 +1,13 @@
 # ChatApp
 
+https://github.com/zdean1/Chat-App
+
+App will route to login page initially and will prompt to enter an email and password. If an incorrect email/password combination is entered, an error message will show up prompting to try again. The app will not route off the login page until a valid email/password combination is entered. 
+
+Implemented log out button in the nav bar that will sign out of app and route back to the login page.
+
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.2.
 
 ## Development server
