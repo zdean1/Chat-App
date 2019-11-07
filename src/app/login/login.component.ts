@@ -15,15 +15,13 @@ export class LoginComponent {
   login(email: HTMLInputElement, password: HTMLInputElement) {
     this.authService.login(email.value, password.value).then(ref => {
       let redirect = this.authService.redirectUrl ? this.router.parseUrl(this.authService.redirectUrl) : '/chatpage';
-
-        // Redirect the user
       this.router.navigateByUrl(redirect);
       this.authService.setLoggedIn();
       this.errorMsg = false;
     }).catch((error) => {
       this.errorMsg = true;
     });
-    
   }
+
 
 }

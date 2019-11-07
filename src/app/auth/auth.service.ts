@@ -22,14 +22,17 @@ export class AuthService {
 
   login(email: string, password: string) {
     return firebase.auth().signInWithEmailAndPassword(email, password);
-    }
-
-  logout(): void {
-    this.angularFireAuth.auth.signOut();
-    this.isLoggedIn = false;
-    
   }
+
+  logout() {
+    return firebase.auth().signOut();    
+  }
+
   setLoggedIn() {
     this.isLoggedIn = true;
+  }
+
+  setLoggedOut() {
+    this.isLoggedIn = false;
   }
 }

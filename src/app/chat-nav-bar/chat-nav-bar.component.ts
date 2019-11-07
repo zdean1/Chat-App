@@ -47,12 +47,10 @@ export class ChatNavBarComponent implements OnInit {
       });
   }
   logout() {
-    this.authService.logout();
-    if (!this.authService.isLoggedIn) {
-        let redirect = this.authService.redirectUrl ? this.router.parseUrl(this.authService.redirectUrl) : '/login';
-        this.router.navigateByUrl(redirect);
-        console.log('logout');
-    }
-
+    this.authService.logout().then(ref => {
+      let redirect = this.authService.redirectUrl ? this.router.parseUrl(this.authService.redirectUrl) : '/login';
+      this.router.navigateByUrl(redirect);
+      this.authService.setLoggedOut();
+    });
   }
 }
