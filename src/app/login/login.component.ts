@@ -8,29 +8,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  message: string;
+  errorMsg: boolean = false;
 
-  constructor(public authService: AuthService, public router: Router) {
-    this.setMessage();
-  }
+  constructor(public authService: AuthService, public router: Router) { }
 
-  setMessage() {
-    this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
-  }
-
-  login() {
-    this.message = 'Trying to log in ...';
-
-    this.authService.login().subscribe(() => {
-      this.setMessage();
-      if (this.authService.isLoggedIn) {
-        // Get the redirect URL from our auth service
-        // If no redirect has been set, use the default
-        let redirect = this.authService.redirectUrl ? this.router.parseUrl(this.authService.redirectUrl) : '/chatpage';
+  login(email: HTMLInputElement, password: HTMLInputElement) {
+    this.authService.login(email.value, password.value).then(ref => {
+      let redirect = this.authService.redirectUrl ? this.router.parseUrl(this.authService.redirectUrl) : '/chatpage';
 
         // Redirect the user
-        this.router.navigateByUrl(redirect);
-      }
+      this.router.navigateByUrl(redirect);
+      this.authService.setLoggedIn();
+      this.errorMsg = false;
+    }).catch((error) => {
+      this.errorMsg = true;
     });
+    
   }
+
 }
