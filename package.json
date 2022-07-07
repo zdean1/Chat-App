@@ -22,7 +22,7 @@
     "@angular/router": "~8.2.4",
     "firebase": "^7.2.3",
     "firebaseui": "^4.2.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "rxjs": "^6.4.0",
     "rxjs-compat": "^6.5.3",
     "rxjs-tslint-rules": "^4.26.1",
